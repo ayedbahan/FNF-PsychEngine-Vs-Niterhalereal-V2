@@ -35,10 +35,10 @@ class MainMenuState extends MusicBeatState
 	var optionShit:Array<String> = [
 		'story_mode',
 		'freeplay',
-		#if MODS_ALLOWED 'mods', #end
-		#if ACHIEVEMENTS_ALLOWED 'awards', #end
+		//#if MODS_ALLOWED 'mods', #end
+		//#if ACHIEVEMENTS_ALLOWED 'awards', #end
 		'credits',
-		#if !switch 'donate', #end
+		#if !switch 'Subscribe', #end
 		'options'
 	];
 
@@ -46,6 +46,7 @@ class MainMenuState extends MusicBeatState
 	var camFollow:FlxObject;
 	var camFollowPos:FlxObject;
 	var debugKeys:Array<FlxKey>;
+	var Char:FlxSprite;
 
 	override function create()
 	{
@@ -56,7 +57,7 @@ class MainMenuState extends MusicBeatState
 
 		#if desktop
 		// Updating Discord Rich Presence
-		DiscordClient.changePresence("In the Menus", null);
+		DiscordClient.changePresence("he In the Menus", null);
 		#end
 		debugKeys = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
 
@@ -118,7 +119,8 @@ class MainMenuState extends MusicBeatState
 			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
 			menuItem.animation.play('idle');
 			menuItem.ID = i;
-			menuItem.screenCenter(X);
+			menuItem.x = 150;
+			//menuItem.screenCenter(X);
 			menuItems.add(menuItem);
 			var scr:Float = (optionShit.length - 4) * 0.135;
 			if(optionShit.length < 6) scr = 0;
@@ -130,11 +132,11 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollowPos, null, 1);
 
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "Psych Engine v" + psychEngineVersion, 12);
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "Niterhale Engine v" + psychEngineVersion, 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 24, 0, "Friday Night Funkin' v" + Application.current.meta.get('version'), 12);
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 24, 0, "Vs Niterhalereal' v" + Application.current.meta.get('version'), 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
@@ -157,6 +159,30 @@ class MainMenuState extends MusicBeatState
 		#end
 
 		super.create();
+		
+		switch(FlxG.random.int(1, 3))
+		{
+          case 1:
+                char = new FlxSprite(820, 170).loadGraphic(Paths.image('mainmenu/Niterhale'));//put your cords and image here
+                char.frames = Paths.getSparrowAtlas('mainmenu/Niterhale');//here put the name of the xml
+                char.animation.addByPrefix('idleN', 'idle', 24, true);//on 'idle normal' change it to your xml one
+                char.animation.play('idleN');//you can rename the anim however you want to
+                char.scrollFactor.set();
+                FlxG.sound.play(Paths.sound('appear'), 2);
+                char.flipX = true;//this is for flipping it to look left instead of right you can make it however you want
+                char.antialiasing = ClientPrefs.globalAntialiasing;
+                add(char);
+          case 2:
+                char = new FlxSprite(820, 170).loadGraphic(Paths.image('mainmenu/Ayed'));//put your cords and image here
+                char.frames = Paths.getSparrowAtlas('mainmenu/ayed');//here put the name of the xml
+                char.animation.addByPrefix('idleA', 'idle', 24, true);//on 'idle normal' change it to your xml one
+                char.animation.play('idleE');//you can rename the anim however you want to
+                char.scrollFactor.set();
+                FlxG.sound.play(Paths.sound('appear'), 2);
+                char.flipX = true;//this is for flipping it to look left instead of right you can make it however you want
+                char.antialiasing = ClientPrefs.globalAntialiasing;
+                add(char);
+		}
 	}
 
 	#if ACHIEVEMENTS_ALLOWED
@@ -204,9 +230,9 @@ class MainMenuState extends MusicBeatState
 
 			if (controls.ACCEPT)
 			{
-				if (optionShit[curSelected] == 'donate')
+				if (optionShit[curSelected] == 'Subscribe')
 				{
-					CoolUtil.browserLoad('https://ninja-muffin24.itch.io/funkin');
+					CoolUtil.browserLoad('https://youtube.com/@niter_fnf_mods_android');
 				}
 				else
 				{
@@ -268,7 +294,7 @@ class MainMenuState extends MusicBeatState
 
 		menuItems.forEach(function(spr:FlxSprite)
 		{
-			spr.screenCenter(X);
+			//spr.screenCenter(X);
 		});
 	}
 
